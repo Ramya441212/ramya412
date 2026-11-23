@@ -52,3 +52,18 @@ models={
 ),
 "SVM":SVC()
 }
+#step5:Define hyperparameter grids
+param_grids={
+  "Logistic Regression":{
+    "model__C":[0,1,1,10],
+    "model_solver":["liblinear"]
+  },
+  "KNN":{
+    "model__n_neighbours":[3,5,7,9],
+    "model__weights":["uniform","distance"]
+  },
+  "Decision Tree":{
+    "model__max_depth":[None,3,5,10],
+    "model__min_samples_split":[2,5,10]
+  },
+  "Random

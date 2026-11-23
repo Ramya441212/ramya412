@@ -66,4 +66,46 @@ param_grids={
     "model__max_depth":[None,3,5,10],
     "model__min_samples_split":[2,5,10]
   },
-  "Random
+  "RandomForest":{
+    "model__n_estimators":[100,200],
+    "model__max_depth":[None,5,10],
+    "model__min_samples_split":[2,5]
+  },
+  "SVM":{
+    "model__C":[0,1,1,10],
+    "model__kernel":["linear",rbf"],
+    "model__gamma":["scale","auto"]
+                     }
+}
+#STEP6:Run GidSearchCV for every algorithm
+results=[]
+best_models={}
+for model_name,model in models.items():
+  print("/n" + "="*60)
+  print("Running:",model_name)
+  print("="*60)
+  pipeline=pipeline([
+    ("scaler",StandardScaler())
+    ("model",model)
+  ])
+  grid_search=GridSearchCV(
+    estiamtor=pipeline,
+    param_grid=param_grids[model_name],
+    scoring="f1",
+    cv=5,
+    n_jobs=-1
+  )
+  grid_search.fit(X_train,y_train)
+  best_models[model_name]=grid_search.best_estimator_results.append({
+    "Model":model_name,
+    "Best F1 Score":grid_search.best_score_,
+    "Best Parameters":grid_search.best_params_
+  })
+  print("Best f1 Score:",
+        round(grid_search.best_score_,4))
+  print("Best Parameters:",
+        gris_search.best_params_)
+#STEP&:Compare all models
+results_df=pd.DataFrame(results)
+results_df=results_df.
+    
